@@ -1,1 +1,99 @@
-<p>weather-home works!</p>
+<div class="background"> 
+
+    <div class="content">
+  
+      <div fxLayoutAlign="center center" >
+  
+        <img  style="float: left; margin: 0px; width:30px; height:30px;" mat-card-image  src="../../../assets/sunCloud.png" >
+         
+        <p style=" color: white; float: right;">Weather App</p> 
+        <br>
+  
+        
+        
+      </div> <br>
+  
+      <div fxLayoutAlign="center center" > 
+        <mat-form-field appearance="fill">
+          <mat-label>Add City</mat-label>
+          <mat-select [(ngModel)]="selectedCityCode" name="selectedCityCode" (selectionChange)="onCityAdd()">
+            <mat-option *ngFor="let city of citylist" [value]="city.CityCode">
+              {{city.CityName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+     </div>
+     
+  
+      <div fxLayout="row wrap" fxLayoutAlign="center center"  fxLayoutGap="50px grid">
+  
+        <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="100%" *ngFor="let weather of weatherMap | keyvalue let idx = index" >
+  
+          <div > 
+            <button  mat-icon-button >
+              <mat-icon class="matIconButton" (click)="onClose(weather.value.id)"> close</mat-icon>
+            </button>
+          </div>
+
+          <mat-card >
+
+            <mat-card-content [style.background]="weatherContentBackgroundColor(idx)" >
+               
+              <div fxFlex="45%" >
+  
+                <p style="font-size:large;">  {{weather.value.name}},  {{weather.value.country}} </p>
+                <p style="font-size:xx-small;">  {{weather.value.time}}, {{weather.value.date}} </p>
+  
+                <img style=" float: left; margin: 0px; width:30px; height:30px" mat-card-sm-image src="{{weather.value.iconUrl}}">
+                <label style="font-size:x-small;">  {{weather.value.description | titlecase}} </label>
+  
+              </div>
+
+              <div fxFlex="25%"></div>
+  
+              <div fxFlex="30%">
+                  
+                <p style="font-size:x-large;"> <b>  {{weather.value.temp}} </b> </p>
+  
+                <label style="font-size:xx-small;"> Temp Min: {{weather.value.temp_min}} </label> <br>
+                <label style="font-size:xx-small;"> Temp Max: {{weather.value.temp_max}} </label>
+               
+              </div>
+              
+            </mat-card-content>
+  
+            <mat-card-footer>
+             
+              <div fxFlex="33%" >
+  
+                <label > <b> Pressure: </b> {{weather.value.pressure}} </label>  <br>
+                <label > <b> Humidity: </b>  {{weather.value.humidity}}</label> <br>
+                <label > <b> Visibility: </b> {{weather.value.visibility }} </label>
+  
+              </div>
+  
+              <div fxFlex="33%">
+            
+                <div style="position: relative; left: 30px; top: 8px; size: 4px;"><mat-icon > near_me</mat-icon> </div>
+                <label > {{weather.value.windSpeed }} {{weather.value.windDeg }} </label>
+  
+              </div>
+  
+              <div fxFlex="33%">
+                  
+                <label > <b> Sunrise: </b> <b>  {{weather.value.sunrise_time}} </b> </label>  <br>
+                <label > <b> Sunset: </b> {{weather.value.sunset_time}} </label> 
+               
+              </div>
+  
+            </mat-card-footer>
+  
+          </mat-card>
+  
+        </div>
+  
+      </div>
+  
+    </div>
+  
+  </div>

@@ -1,0 +1,47 @@
+.background{
+    background-image:url("../../../assets/backimg.jpg");
+
+    background-size:contain;
+    min-height:650px;
+
+
+
+}
+.content {
+    padding: 10px;
+    margin-right : 5px;
+    margin-left : 5px;
+    margin-top : 30px;
+    background-size: auto;
+}
+
+.content > mat-card {
+    width: 200px;
+}
+
+
+
+mat-card-content{
+    
+    height: auto;
+    background-image: linear-gradient(to bottom right, blue,white);
+    padding: 10px;
+    
+}
+
+mat-card-footer{
+    height:auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size:xx-small;
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.matIconButton {
+    height: 20px;
+    width: 20px;
+    font-size: 15px;
+    line-height: 0px; 
+    color: white;
+    justify-self: right;
+}

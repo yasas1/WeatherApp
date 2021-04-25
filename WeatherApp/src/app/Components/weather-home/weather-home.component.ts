@@ -23,6 +23,11 @@ export class WeatherHomeComponent implements OnInit {
   // The map which is included with city codes with weather data
   weatherMap = new Map<number, Weather>();
 
+  selectedCityCode:string="";
+
+  // Colors for weather content
+  weatherContentColors = ["blue", "purple", "green","orange","red","teal","chocolate","yellow"];
+
   constructor(
     private http:HttpClient,
     private weatherService : WeatherService,
@@ -43,6 +48,9 @@ export class WeatherHomeComponent implements OnInit {
     
   }
 
+  /**
+   * Get initial weather data list from weather service
+   * */ 
   private getWeatherData(){
    
     this.weatherService.getWeatherForFiveCity(this.cityCodeList).subscribe((Response:any)=>{
@@ -50,6 +58,9 @@ export class WeatherHomeComponent implements OnInit {
     }) 
   }
 
+  /**
+   * Set initial weather data list into the Map
+   * */ 
   private setWeatherDataList(data:any){
 
     const weatherDataList = data;
@@ -95,6 +106,13 @@ export class WeatherHomeComponent implements OnInit {
 
   }
 
+  /**
+   * Adding city on click
+   * */ 
+  onCityAdd(){
+
+  }
+
 
   /**
    * Extract city codes from Json data
@@ -119,6 +137,28 @@ export class WeatherHomeComponent implements OnInit {
    * */ 
   getJsonData(filePath: string){
     return this.http.get(filePath);
+  }
+
+  /**
+   * Close weather content on click
+   * */ 
+  onClose(id:number){
+
+    if( this.weatherMap.has(id) ){
+      this.weatherMap.delete(id);
+    }
+  }
+
+  /**
+   * Add color funtion into weather content from color array
+   * */ 
+  weatherContentBackgroundColor(idx:number){
+  
+    let fromColorList = "linear-gradient(to bottom right,"+this.weatherContentColors[idx]+", #888888)";
+    let defaultColor = "linear-gradient(to bottom right,navy, #888888)";
+
+    return this.weatherContentColors.length > idx ? fromColorList: defaultColor;
+    
   }
   
 
