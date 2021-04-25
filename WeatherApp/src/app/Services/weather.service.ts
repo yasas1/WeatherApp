@@ -7,7 +7,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class WeatherService {
 
-  constructor(private http:HttpClient) { }
+  apiKey = '22a9305f1ec522047138a3a2193e7c0c';
+  url:string;
+
+  constructor(private http:HttpClient) { 
+    this.url='http://api.openweathermap.org/data/2.5/group?id=';
+  }
 
   getWeatherForOneCity(cityCode:string){
     return this.http.get(this.url+cityCode+'&units=metric&appid='+this.apiKey);
