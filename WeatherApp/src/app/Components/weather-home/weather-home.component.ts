@@ -19,6 +19,7 @@ export class WeatherHomeComponent implements OnInit {
 
   constructor(
     private http:HttpClient,
+    private weatherService:WeatherService,
   ) { }
 
   ngOnInit(): void {
@@ -52,6 +53,9 @@ export class WeatherHomeComponent implements OnInit {
     }
   }
 
+  /**
+   * Get Json file
+   * */ 
   getJsonData(filePath: string){
     return this.http.get(filePath);
   }
