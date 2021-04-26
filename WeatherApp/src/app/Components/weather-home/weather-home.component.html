@@ -1,8 +1,18 @@
-<app-log-in-out></app-log-in-out>
+<mat-toolbar color="blue">
+  <mat-toolbar-row>
+    <img  style="float: left; margin: 0px; width:30px; height:30px;" mat-card-image  src="../../../assets/sunCloud.png" >
+    <span> Weather App</span>
+    <span class="menu-spacer"></span>
+    <div >
+      <app-log-in-out></app-log-in-out>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-<div *ngIf="(auth.isAuthenticated$ | async )" class="background"> 
 
-    <div class="content">
+<div  class="background"> 
+
+    <div *ngIf="(auth.isAuthenticated$ | async )" class="content">
   
       <div fxLayoutAlign="center center" >
   
