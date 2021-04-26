@@ -53,11 +53,11 @@
                
               <div fxFlex="45%" >
   
-                <p style="font-size:large;">  {{weather.value.name}},  {{weather.value.country}} </p>
-                <p style="font-size:xx-small;">  {{weather.value.time}}, {{weather.value.date}} </p>
+                <p class="largeDisplay" >  {{weather.value.name}},  {{weather.value.country}} </p>
+                <p  class="xxSmallDisplay">  {{weather.value.time}}, {{weather.value.date}} </p>
   
                 <img style=" float: left; margin: 0px; width:30px; height:30px" mat-card-sm-image src="{{weather.value.iconUrl}}">
-                <label style="font-size:x-small;">  {{weather.value.description | titlecase}} </label>
+                <label class="xSmallDisplay" >  {{weather.value.description | titlecase}} </label>
   
               </div>
 
@@ -65,10 +65,10 @@
   
               <div fxFlex="30%">
                   
-                <p style="font-size:x-large;"> <b>  {{weather.value.temp}} </b> </p>
+                <p class="xlargeDisplay"> <b>  {{weather.value.temp}} </b> </p>
   
-                <label style="font-size:xx-small;"> Temp Min: {{weather.value.temp_min}} </label> <br>
-                <label style="font-size:xx-small;"> Temp Max: {{weather.value.temp_max}} </label>
+                <label  class="xxSmallDisplay"> Temp Min: {{weather.value.temp_min}} </label> <br>
+                <label  class="xxSmallDisplay"> Temp Max: {{weather.value.temp_max}} </label>
                
               </div>
               
