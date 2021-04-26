@@ -65,9 +65,12 @@ export class WeatherHomeComponent implements OnInit {
 
     const weatherDataList = data;
 
+    // initially map is cleared 
     this.weatherMap.clear();
 
     for(let weatherData of weatherDataList){
+
+      // set weather info into model
 
       let weather = new Weather();
 
@@ -100,6 +103,7 @@ export class WeatherHomeComponent implements OnInit {
 
       weather.createDateTime = new Date().getTime();
 
+      // add into the map
       this.weatherMap.set(weather.id,weather);
 
     }
@@ -109,8 +113,81 @@ export class WeatherHomeComponent implements OnInit {
   /**
    * Adding city on click
    * */ 
-  onCityAdd(){
+   onCityAdd() {
 
+    let cityCode = Number(this.selectedCityCode);
+    let currentTime =  new Date().getTime(); 
+
+    //if requested weather info is already there
+    if( this.weatherMap.has(cityCode) ){
+      
+        let weather = this.weatherMap.get(cityCode);
+        let gotTime =  weather? weather?.createDateTime:0;
+        console.log(currentTime - gotTime);
+
+        if (currentTime - gotTime > 5*60*1000) { // checking weather data is older than 5min or not
+          
+          //if it is older than 5 min, information will be replaced in the Map by calling weather service api
+          this.weatherService.getWeatherForOneCity(this.selectedCityCode).subscribe((Response:any)=>{
+            this.setCityWeatherData(Response.list);
+          });
+        }
+       
+    }
+    else{
+
+      this.weatherService.getWeatherForOneCity(this.selectedCityCode).subscribe((Response:any)=>{
+        this.setCityWeatherData(Response.list);
+      });
+
+    }
+  
+  }
+
+  /**
+   * Adding only one weather data into the map
+   * */ 
+
+  private setCityWeatherData(data:any){
+
+    const weatherData = data;
+
+    let weather = new Weather();
+
+    // set weather info into model
+    weather.id = weatherData[0].id;
+    weather.name = weatherData[0].name; 
+
+    let dateTime = new Date(weatherData[0].dt*1000 );
+    weather.datetime = dateTime;
+    weather.date = formatDate(dateTime, 'MMM dd', this.locale);
+    weather.time = formatDate(dateTime, 'h:mm a', this.locale);
+   
+    let sunsetTime = new Date(weatherData[0].sys.sunset*1000);
+    weather.sunset_time = sunsetTime.toLocaleTimeString();
+    
+    let sunsetRise = new Date(weatherData[0].sys.sunrise*1000);
+    weather.sunrise_time = sunsetRise.toLocaleTimeString();
+
+    weather.temp = weatherData[0].main.temp+"°c";
+    weather.temp_min = weatherData[0].main.temp_min+"°c";
+    weather.temp_max = weatherData[0].main.temp_max+"°c";
+    weather.pressure = weatherData[0].main.pressure+"hPa";
+    weather.humidity = weatherData[0].main.humidity+"%";
+    weather.visibility = weatherData[0].visibility/1000 +"km";
+    weather.description = weatherData[0].weather[0].description;
+    weather.icon = weatherData[0].weather[0].icon;
+    weather.iconUrl = "http://openweathermap.org/img/wn/"+weather.icon+"@2x.png"
+    weather.country = weatherData[0].sys.country;
+    weather.windSpeed = weatherData[0].wind.speed+"m/s";
+    weather.windDeg = weatherData[0].wind.deg+" Degree";
+
+    weather.createDateTime = new Date().getTime(); 
+
+    // add into the map
+    this.weatherMap.set( weather.id,weather);
+
+    
   }
 
 
