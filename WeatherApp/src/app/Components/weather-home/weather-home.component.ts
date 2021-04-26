@@ -41,7 +41,6 @@ export class WeatherHomeComponent implements OnInit {
 
     this.getJsonData('assets/cities.json').subscribe(data => {
       this.data = data;
-      console.log(data);
       this.getCitiesList();
       this.getWeatherData();
     }); 
@@ -55,6 +54,7 @@ export class WeatherHomeComponent implements OnInit {
    
     this.weatherService.getWeatherForFiveCity(this.cityCodeList).subscribe((Response:any)=>{
       this.setWeatherDataList(Response.list);
+      console.log(Response.list);
     }) 
   }
 
@@ -81,13 +81,13 @@ export class WeatherHomeComponent implements OnInit {
       weather.datetime = dateTime;
       weather.date = formatDate(dateTime, 'MMM dd', this.locale);
       weather.time = formatDate(dateTime, 'h:mm a', this.locale);
-    
-      let sunsetTime = new Date(weatherData.sys.sunset*1000);
-      weather.sunset_time = sunsetTime.toLocaleTimeString();
-      
-      let sunsetRise = new Date(weatherData.sys.sunrise*1000);
-      weather.sunrise_time = sunsetRise.toLocaleTimeString();
 
+      let sunRise = new Date(weatherData.sys.sunrise*1000 + (weatherData.sys.timezone *1000));
+      weather.sunrise_time = sunRise.getUTCHours().toLocaleString() + ":"+ sunRise.getUTCMinutes().toLocaleString() +"am";
+    
+      let sunsetTime = new Date(weatherData.sys.sunset*1000 + (weatherData.sys.timezone *1000));
+      weather.sunset_time = sunsetTime.getUTCHours().toLocaleString() + ":"+ sunRise.getUTCMinutes().toLocaleString() +"pm";
+      
       weather.temp = weatherData.main.temp+"°c";
       weather.temp_min = weatherData.main.temp_min+"°c";
       weather.temp_max = weatherData.main.temp_max+"°c";
@@ -123,7 +123,6 @@ export class WeatherHomeComponent implements OnInit {
       
         let weather = this.weatherMap.get(cityCode);
         let gotTime =  weather? weather?.createDateTime:0;
-        console.log(currentTime - gotTime);
 
         if (currentTime - gotTime > 5*60*1000) { // checking weather data is older than 5min or not
           
