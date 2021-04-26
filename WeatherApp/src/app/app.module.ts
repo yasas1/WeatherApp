@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { AuthModule } from '@auth0/auth0-angular';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
+    AuthModule.forRoot({
+      domain: 'dev-iy3se4l6.us.auth0.com',
+      clientId: 'HueT5CbDFWtrMv8PXdiQRITACRBv8qI2'
+    }),
+
   ],
   providers: [],
   bootstrap: [AppComponent]

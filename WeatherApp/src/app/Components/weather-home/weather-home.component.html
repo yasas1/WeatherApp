@@ -1,4 +1,6 @@
-<div class="background"> 
+<app-log-in-out></app-log-in-out>
+
+<div *ngIf="(auth.isAuthenticated$ | async )" class="background"> 
 
     <div class="content">
   

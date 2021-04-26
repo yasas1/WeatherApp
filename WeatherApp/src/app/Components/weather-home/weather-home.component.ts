@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { WeatherService } from 'src/app/Services/weather.service';
 import { Weather } from 'src/app/Models/weather';
 import { formatDate } from '@angular/common';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-weather-home',
@@ -32,6 +33,7 @@ export class WeatherHomeComponent implements OnInit {
     private http:HttpClient,
     private weatherService : WeatherService,
     @Inject(LOCALE_ID) private locale: string,
+    public auth: AuthService
   ) { }
 
   ngOnInit(): void {
